@@ -51,7 +51,9 @@ import br.com.github.sprint3.ui.theme.TextDark
 import br.com.github.sprint3.ui.theme.TextMuted
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLoginClick: () -> Unit = {}
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -106,7 +108,8 @@ fun LoginScreen() {
                                     password = password,
                                     onPasswordChange = { password = it },
                                     isPasswordVisible = isPasswordVisible,
-                                    onPasswordVisibleChange = { isPasswordVisible = it }
+                                    onPasswordVisibleChange = { isPasswordVisible = it },
+                                    onLoginClick = onLoginClick
                                 )
                             }
 
@@ -131,7 +134,8 @@ fun LoginScreen() {
                                 password = password,
                                 onPasswordChange = { password = it },
                                 isPasswordVisible = isPasswordVisible,
-                                onPasswordVisibleChange = { isPasswordVisible = it }
+                                onPasswordVisibleChange = { isPasswordVisible = it },
+                                onLoginClick = onLoginClick
                             )
 
                             Spacer(modifier = Modifier.height(28.dp))
@@ -152,7 +156,8 @@ private fun LoginFormContent(
     password: String,
     onPasswordChange: (String) -> Unit,
     isPasswordVisible: Boolean,
-    onPasswordVisibleChange: (Boolean) -> Unit
+    onPasswordVisibleChange: (Boolean) -> Unit,
+    onLoginClick: () -> Unit
 ) {
     Text(
         text = "BEM VINDO(A)",
@@ -274,7 +279,7 @@ private fun LoginFormContent(
 
     // Entrar Button
     Button(
-        onClick = { /* First stage UI only */ },
+        onClick = onLoginClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = EuroBlue,
             contentColor = EuroYellow

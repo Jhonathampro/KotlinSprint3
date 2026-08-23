@@ -7,3 +7,12 @@ object SplashRoute
 
 @Serializable
 object LoginRoute
+
+@Serializable
+object HomeRoute
+
+@Serializable
+object TurmasRoute
+
+@Serializable
+data class StudentsRoute(val turmaId: String)
