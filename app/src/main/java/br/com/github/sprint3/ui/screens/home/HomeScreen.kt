@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,19 +55,14 @@ fun HomeScreen(
     onTurmaClick: (String) -> Unit = {},
     onTabSelected: (BottomTab) -> Unit = {}
 ) {
-    var currentTab by remember { mutableStateOf(BottomTab.HOME) }
-
     Scaffold(
         topBar = {
             HomeTopBar()
         },
         bottomBar = {
             AppBottomNavigation(
-                currentTab = currentTab,
-                onTabSelected = { tab ->
-                    currentTab = tab
-                    onTabSelected(tab)
-                }
+                currentTab = BottomTab.HOME,
+                onTabSelected = onTabSelected
             )
         },
         containerColor = Color(0xFFF8F9FA)
@@ -76,21 +72,16 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            when (currentTab) {
-                BottomTab.HOME -> HomeTabContent(
-                    onTurmaClick = onTurmaClick,
-                    onNavigateToTurmasTab = { currentTab = BottomTab.TURMAS }
-                )
-                BottomTab.TURMAS -> HomeTurmasTabContent(onTurmaClick = onTurmaClick)
-                BottomTab.PLATAFORMAS -> PlataformasTabContent()
-                BottomTab.DASHBOARD -> DashboardTabContent()
-            }
+            HomeTabContent(
+                onTurmaClick = onTurmaClick,
+                onNavigateToTurmasTab = { onTabSelected(BottomTab.TURMAS) }
+            )
         }
     }
 }
 
 @Composable
-private fun HomeTopBar() {
+fun HomeTopBar() {
     Surface(
         color = EuroBlue,
         shadowElevation = 4.dp,
@@ -99,6 +90,7 @@ private fun HomeTopBar() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .statusBarsPadding()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -293,36 +285,9 @@ private fun HomeTurmasTabContent(onTurmaClick: (String) -> Unit) {
     }
 }
 
-@Composable
-private fun PlataformasTabContent() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        EurofarmaLogo(size = 100.dp)
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Plataformas Eurofarma",
-            color = EuroBlue,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Acesse os portais de treinamento, ecossistemas de inovação e plataformas internas da Eurofarma.",
-            color = TextMuted,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
-        )
-    }
-}
 
 @Composable
-private fun DashboardTabContent() {
+fun DashboardTabContent() {
     val totalTurmas = mockTurmas.size
     val totalStudents = mockTurmas.sumOf { it.studentCount }
     val avgEngagement = if (mockTurmas.isNotEmpty()) {

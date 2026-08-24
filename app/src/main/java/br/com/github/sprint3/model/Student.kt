@@ -3,6 +3,7 @@ package br.com.github.sprint3.model
 data class Student(
     val id: String,
     val name: String,
+    val email: String = "",
     val presencesCount: Int = 0,
     val attendanceStatus: AttendanceStatus = AttendanceStatus.UNMARKED
 ) {

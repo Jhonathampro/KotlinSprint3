@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import br.com.github.sprint3.ui.components.BottomTab
+import br.com.github.sprint3.ui.screens.cadastro.CadastroScreen
+import br.com.github.sprint3.ui.screens.dashboard.DashboardScreen
 import br.com.github.sprint3.ui.screens.home.HomeScreen
 import br.com.github.sprint3.ui.screens.login.LoginScreen
 import br.com.github.sprint3.ui.screens.splash.SplashScreen
@@ -20,25 +22,25 @@ fun AppNavigation(
         when (tab) {
             BottomTab.HOME -> {
                 navController.navigate(HomeRoute) {
-                    popUpTo(SplashRoute)
+                    popUpTo(HomeRoute) { inclusive = false }
                     launchSingleTop = true
                 }
             }
             BottomTab.TURMAS -> {
                 navController.navigate(TurmasRoute) {
-                    popUpTo(SplashRoute)
+                    popUpTo(HomeRoute) { inclusive = false }
                     launchSingleTop = true
                 }
             }
-            BottomTab.PLATAFORMAS -> {
-                navController.navigate(HomeRoute) {
-                    popUpTo(SplashRoute)
+            BottomTab.CADASTRO -> {
+                navController.navigate(CadastroRoute) {
+                    popUpTo(HomeRoute) { inclusive = false }
                     launchSingleTop = true
                 }
             }
             BottomTab.DASHBOARD -> {
-                navController.navigate(HomeRoute) {
-                    popUpTo(SplashRoute)
+                navController.navigate(DashboardRoute) {
+                    popUpTo(HomeRoute) { inclusive = false }
                     launchSingleTop = true
                 }
             }
@@ -83,6 +85,22 @@ fun AppNavigation(
                 onTurmaClick = { turmaId ->
                     navController.navigate(StudentsRoute(turmaId))
                 },
+                onTabSelected = { tab ->
+                    navigateToTab(tab)
+                }
+            )
+        }
+
+        composable<CadastroRoute> {
+            CadastroScreen(
+                onTabSelected = { tab ->
+                    navigateToTab(tab)
+                }
+            )
+        }
+
+        composable<DashboardRoute> {
+            DashboardScreen(
                 onTabSelected = { tab ->
                     navigateToTab(tab)
                 }

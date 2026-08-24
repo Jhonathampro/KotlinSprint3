@@ -30,7 +30,7 @@ import br.com.github.sprint3.ui.theme.EuroYellow
 enum class BottomTab {
     HOME,
     TURMAS,
-    PLATAFORMAS,
+    CADASTRO,
     DASHBOARD
 }
 
@@ -59,9 +59,9 @@ fun AppBottomNavigation(
             onClick = { onTabSelected(BottomTab.TURMAS) }
         )
         BottomNavItem(
-            label = "Plataformas",
-            isSelected = currentTab == BottomTab.PLATAFORMAS,
-            onClick = { onTabSelected(BottomTab.PLATAFORMAS) }
+            label = "Cadastro",
+            isSelected = currentTab == BottomTab.CADASTRO,
+            onClick = { onTabSelected(BottomTab.CADASTRO) }
         )
         BottomNavItem(
             label = "Dashboard",

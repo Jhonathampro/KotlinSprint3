@@ -15,4 +15,11 @@ object HomeRoute
 object TurmasRoute
 
 @Serializable
+object CadastroRoute
+
+@Serializable
+object DashboardRoute
+
+@Serializable
 data class StudentsRoute(val turmaId: String)
+
