@@ -15,11 +15,12 @@ import br.com.github.sprint3.ui.screens.home.HomeTopBar
 
 @Composable
 fun DashboardScreen(
-    onTabSelected: (BottomTab) -> Unit = {}
+    onTabSelected: (BottomTab) -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
-            HomeTopBar()
+            HomeTopBar(onLogoutClick = onLogoutClick)
         },
         bottomBar = {
             AppBottomNavigation(

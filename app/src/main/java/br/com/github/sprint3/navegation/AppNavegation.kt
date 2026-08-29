@@ -47,6 +47,12 @@ fun AppNavigation(
         }
     }
 
+    fun performLogout() {
+        navController.navigate(LoginRoute) {
+            popUpTo(0) { inclusive = true }
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = SplashRoute
@@ -54,7 +60,9 @@ fun AppNavigation(
         composable<SplashRoute> {
             SplashScreen(
                 onNavigateToLogin = {
-                    navController.navigate(LoginRoute)
+                    navController.navigate(LoginRoute) {
+                        popUpTo(SplashRoute) { inclusive = true }
+                    }
                 }
             )
         }
@@ -76,6 +84,9 @@ fun AppNavigation(
                 },
                 onTabSelected = { tab ->
                     navigateToTab(tab)
+                },
+                onLogoutClick = {
+                    performLogout()
                 }
             )
         }
@@ -87,6 +98,9 @@ fun AppNavigation(
                 },
                 onTabSelected = { tab ->
                     navigateToTab(tab)
+                },
+                onLogoutClick = {
+                    performLogout()
                 }
             )
         }
@@ -95,6 +109,9 @@ fun AppNavigation(
             CadastroScreen(
                 onTabSelected = { tab ->
                     navigateToTab(tab)
+                },
+                onLogoutClick = {
+                    performLogout()
                 }
             )
         }
@@ -103,6 +120,9 @@ fun AppNavigation(
             DashboardScreen(
                 onTabSelected = { tab ->
                     navigateToTab(tab)
+                },
+                onLogoutClick = {
+                    performLogout()
                 }
             )
         }
@@ -116,6 +136,9 @@ fun AppNavigation(
                 },
                 onTabSelected = { tab ->
                     navigateToTab(tab)
+                },
+                onLogoutClick = {
+                    performLogout()
                 }
             )
         }

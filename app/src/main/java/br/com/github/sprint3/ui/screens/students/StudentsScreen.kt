@@ -17,9 +17,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -50,7 +53,8 @@ import br.com.github.sprint3.ui.theme.TextMuted
 fun StudentsScreen(
     turmaId: String,
     onBackClick: () -> Unit = {},
-    onTabSelected: (BottomTab) -> Unit = {}
+    onTabSelected: (BottomTab) -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
     val turma = mockTurmas.find { it.id == turmaId } ?: mockTurmas.first()
 
@@ -59,7 +63,8 @@ fun StudentsScreen(
             StudentsTopBar(
                 title = turma.name,
                 subtitle = turma.course,
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onLogoutClick = onLogoutClick
             )
         },
         bottomBar = {
@@ -157,7 +162,8 @@ fun StudentsScreen(
 private fun StudentsTopBar(
     title: String,
     subtitle: String,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onLogoutClick: () -> Unit = {}
 ) {
     Surface(
         color = EuroBlue,
@@ -168,31 +174,65 @@ private fun StudentsTopBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
-                .padding(horizontal = 8.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Voltar",
-                    tint = EuroYellow
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
+            ) {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Voltar",
+                        tint = EuroYellow
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Column {
+                    Text(
+                        text = title,
+                        color = EuroYellow,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = subtitle,
+                        color = Color.White.copy(alpha = 0.8f),
+                        fontSize = 11.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            Column {
-                Text(
-                    text = title,
-                    color = EuroYellow,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = subtitle,
-                    color = Color.White.copy(alpha = 0.8f),
-                    fontSize = 11.sp
-                )
+            Surface(
+                color = Color.White.copy(alpha = 0.15f),
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.clickable { onLogoutClick() }
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = "Sair",
+                        tint = EuroYellow,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Sair",
+                        color = EuroYellow,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }
