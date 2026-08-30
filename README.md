@@ -123,6 +123,17 @@ Abra o projeto no **Android Studio**, aguarde a sincronização do Gradle e exec
 
 ---
 
+
+# 🎥 Vídeo da Aplicação
+
+Abaixo está o vídeo demonstrando o funcionamento da aplicação **Euro Tech**, apresentando suas principais telas e funcionalidades.
+
+**▶️ Demonstração da aplicação:**
+
+<video controls src="2026-08-30 16-49-15.mp4" title="Title"></video>
+
+---
+
 ## 👥 Euro Educa
 
 **Euro Tech — Plataforma para gestão e acompanhamento da assiduidade dos alunos.**
