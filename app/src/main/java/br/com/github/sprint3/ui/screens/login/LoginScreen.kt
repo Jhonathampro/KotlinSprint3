@@ -57,6 +57,30 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf<String?>(null) }
+    var passwordError by remember { mutableStateOf<String?>(null) }
+
+    fun validateAndLogin() {
+        var isValid = true
+
+        if (email.trim().isBlank()) {
+            emailError = "O e-mail/usuário é obrigatório."
+            isValid = false
+        } else {
+            emailError = null
+        }
+
+        if (password.trim().isBlank()) {
+            passwordError = "A senha é obrigatória."
+            isValid = false
+        } else {
+            passwordError = null
+        }
+
+        if (isValid) {
+            onLoginClick()
+        }
+    }
 
     val configuration = LocalConfiguration.current
     val isWideScreen = configuration.screenWidthDp > 600
@@ -104,12 +128,24 @@ fun LoginScreen(
                             ) {
                                 LoginFormContent(
                                     email = email,
-                                    onEmailChange = { email = it },
+                                    onEmailChange = {
+                                        email = it
+                                        if (emailError != null && it.trim().isNotBlank()) {
+                                            emailError = null
+                                        }
+                                    },
+                                    emailError = emailError,
                                     password = password,
-                                    onPasswordChange = { password = it },
+                                    onPasswordChange = {
+                                        password = it
+                                        if (passwordError != null && it.trim().isNotBlank()) {
+                                            passwordError = null
+                                        }
+                                    },
+                                    passwordError = passwordError,
                                     isPasswordVisible = isPasswordVisible,
                                     onPasswordVisibleChange = { isPasswordVisible = it },
-                                    onLoginClick = onLoginClick
+                                    onLoginClick = { validateAndLogin() }
                                 )
                             }
 
@@ -130,12 +166,24 @@ fun LoginScreen(
                         ) {
                             LoginFormContent(
                                 email = email,
-                                onEmailChange = { email = it },
+                                onEmailChange = {
+                                    email = it
+                                    if (emailError != null && it.trim().isNotBlank()) {
+                                        emailError = null
+                                    }
+                                },
+                                emailError = emailError,
                                 password = password,
-                                onPasswordChange = { password = it },
+                                onPasswordChange = {
+                                    password = it
+                                    if (passwordError != null && it.trim().isNotBlank()) {
+                                        passwordError = null
+                                    }
+                                },
+                                passwordError = passwordError,
                                 isPasswordVisible = isPasswordVisible,
                                 onPasswordVisibleChange = { isPasswordVisible = it },
-                                onLoginClick = onLoginClick
+                                onLoginClick = { validateAndLogin() }
                             )
 
                             Spacer(modifier = Modifier.height(28.dp))
@@ -153,8 +201,10 @@ fun LoginScreen(
 private fun LoginFormContent(
     email: String,
     onEmailChange: (String) -> Unit,
+    emailError: String? = null,
     password: String,
     onPasswordChange: (String) -> Unit,
+    passwordError: String? = null,
     isPasswordVisible: Boolean,
     onPasswordVisibleChange: (Boolean) -> Unit,
     onLoginClick: () -> Unit
@@ -198,6 +248,7 @@ private fun LoginFormContent(
                 fontSize = 13.sp
             )
         },
+        isError = emailError != null,
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -205,11 +256,21 @@ private fun LoginFormContent(
             unfocusedContainerColor = Color.White,
             focusedBorderColor = EuroBlue,
             unfocusedBorderColor = InputBorder,
+            errorBorderColor = Color.Red,
             focusedTextColor = TextDark,
             unfocusedTextColor = TextDark
         ),
         modifier = Modifier.fillMaxWidth()
     )
+
+    if (emailError != null) {
+        Text(
+            text = emailError,
+            color = Color.Red,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(start = 4.dp, top = 2.dp)
+        )
+    }
 
     Spacer(modifier = Modifier.height(16.dp))
 
@@ -233,6 +294,7 @@ private fun LoginFormContent(
                 fontSize = 13.sp
             )
         },
+        isError = passwordError != null,
         singleLine = true,
         visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         shape = RoundedCornerShape(8.dp),
@@ -241,11 +303,21 @@ private fun LoginFormContent(
             unfocusedContainerColor = Color.White,
             focusedBorderColor = EuroBlue,
             unfocusedBorderColor = InputBorder,
+            errorBorderColor = Color.Red,
             focusedTextColor = TextDark,
             unfocusedTextColor = TextDark
         ),
         modifier = Modifier.fillMaxWidth()
     )
+
+    if (passwordError != null) {
+        Text(
+            text = passwordError,
+            color = Color.Red,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(start = 4.dp, top = 2.dp)
+        )
+    }
 
     Spacer(modifier = Modifier.height(6.dp))
 

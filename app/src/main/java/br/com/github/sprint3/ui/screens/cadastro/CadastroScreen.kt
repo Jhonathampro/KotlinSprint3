@@ -173,7 +173,7 @@ fun CadastroScreen(
 
     Scaffold(
         topBar = {
-            HomeTopBar()
+            HomeTopBar(onLogoutClick = onLogoutClick)
         },
         bottomBar = {
             AppBottomNavigation(
