@@ -130,7 +130,7 @@ Abaixo está o vídeo demonstrando o funcionamento da aplicação **Euro Tech**,
 
 **▶️ Demonstração da aplicação:**
 
-<video controls src="2026-08-30 16-49-15.mp4" title="Title"></video>
+https://www.youtube.com/watch?v=pLA9PyFSwVo
 
 ---
 
